@@ -394,8 +394,10 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
     unsigned long thdid = thd_get_thread_id(pThdData->getTHD());
     query_id_t qid = thd_inst_query_id(pThdData->getTHD());
 	int command = thd_inst_command(pThdData->getTHD());
+	struct tm *dt;
+	char buf[19];
+	char tstr[19];
 
-	
 	Security_context * sctx = thd_inst_main_security_ctx(pThdData->getTHD());
 
     //initialize yajl
@@ -406,7 +408,10 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
     //for now simply use the current time.
     //my_getsystime() time since epoc in 100 nanosec units. Need to devide by 1000*(1000/100) to reach millis
     uint64 ts = my_getsystime() / (10000);
-    yajl_add_uint64(gen, "date", ts);
+	strftime(tstr, sizeof(tstr), "%F %T", dt);
+	sprintf(buf,"%s",tstr)
+	yajl_add_string_val(gen, "date", buf);
+//    yajl_add_uint64(gen, "date", ts);
     yajl_add_uint64(gen, "thread-id", thdid);
     yajl_add_uint64(gen, "query-id", qid);
 	yajl_add_string_val(gen, "user", sctx->user);
