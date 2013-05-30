@@ -409,7 +409,7 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
     //my_getsystime() time since epoc in 100 nanosec units. Need to devide by 1000*(1000/100) to reach millis
     uint64 ts = my_getsystime() / (10000);
 	strftime(tstr, sizeof(tstr), "%F %T", dt);
-	sprintf(buf,"%s",tstr)
+	sprintf(buf,"%s",tstr);
 	yajl_add_string_val(gen, "date", buf);
 //    yajl_add_uint64(gen, "date", ts);
     yajl_add_uint64(gen, "thread-id", thdid);
