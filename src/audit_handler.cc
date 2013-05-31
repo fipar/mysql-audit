@@ -395,8 +395,9 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
     query_id_t qid = thd_inst_query_id(pThdData->getTHD());
 	int command = thd_inst_command(pThdData->getTHD());
 	struct tm *dt;
-	char buf[19];
-	char tstr[19];
+	time_t rt;
+	char buf[60];
+	char tstr[60];
 
 	Security_context * sctx = thd_inst_main_security_ctx(pThdData->getTHD());
 
@@ -407,8 +408,11 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
     //TODO: get the start date from THD (but it is not in millis. Need to think about how we handle this)
     //for now simply use the current time.
     //my_getsystime() time since epoc in 100 nanosec units. Need to devide by 1000*(1000/100) to reach millis
-    uint64 ts = my_getsystime() / (10000);
-	strftime(tstr, sizeof(tstr), "%F %T", dt);
+    //uint64 ts = my_getsystime() / (10000);
+	// const time_t rawtime = (const time_t) my_getsystime() / 10000;
+	time(&rt);	
+	dt = localtime(&rt);
+	strftime(tstr, sizeof(tstr), "%Y-%m-%d %T", dt);
 	sprintf(buf,"%s",tstr);
 	yajl_add_string_val(gen, "date", buf);
 //    yajl_add_uint64(gen, "date", ts);
