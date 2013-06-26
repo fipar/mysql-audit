@@ -377,7 +377,6 @@ ssize_t Audit_json_formatter::event_format(ThdSesData* pThdData, IWriter * write
 {
     unsigned long thdid = thd_get_thread_id(pThdData->getTHD());
     query_id_t qid = thd_inst_query_id(pThdData->getTHD());
-	int command = thd_inst_command(pThdData->getTHD());
 	struct tm *dt;
 	time_t rt;
 	char buf[60];
