@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fipar/mysql-audit.png?branch=master)](https://travis-ci.org/fipar/mysql-audit)
+
 MySQL AUDIT Plugin
 ===================
 
