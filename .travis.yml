@@ -1,1 +1,4 @@
-./build-for-51.sh 
+language: C
+compiler: 
+  - gcc
+script: ./build-for-51.sh 
